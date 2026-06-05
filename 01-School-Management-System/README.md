@@ -2,7 +2,7 @@ Let's Make an School management system
 
 
 so what should i have to do? 
-    yes, you are write first i have to clearify the problem.
+    yes, you are right first i have to clearify the problem.
 1:  add a student. (simple)
 2:  show the students (easy)
 3:  find an students (bingo)
