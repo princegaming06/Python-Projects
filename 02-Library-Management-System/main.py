@@ -14,16 +14,21 @@ class Library:
         self.issued_book = []
     def addBook(self, book):
         book_arr = self.books
-        for checkBook in book_arr:
-            if not book in checkBook:
-                book_arr.append(book)
+        if len(book_arr) == 0:
+            book_arr.append(book)
+        else:
+            for checkBook in book_arr:
+                if not book.Id == checkBook.Id:
+                    book_arr.append(book)
         book.original_books += 1
         book.book_remain += 1
         # inner chain method
         def inner(next_book):
+            checkBook_id = set()
             for checkBook in book_arr:
-                if not next_book.Id in checkBook.Id:
-                    book_arr.append(next_book)
+                checkBook_id.add(checkBook.Id)
+            if not next_book.Id in checkBook_id:
+                book_arr.append(next_book)
             next_book.original_books += 1
             next_book.book_remain += 1
             return inner
@@ -50,7 +55,7 @@ class Library:
                 resulted_book = book
                 resulted_book_remain = book.book_remain
         if (book_result == True):
-            if (book.book_remain == 1):
+            if (resulted_book_remain == 1):
                 print(f"{resulted_book_remain} copy is available of {resulted_book}.\n")
             else:
                 print(f"{resulted_book_remain} copies are available of {resulted_book}.\n")
@@ -74,10 +79,10 @@ class Library:
                 resulted_book = book
                 resulted_book_remain = book.book_remain
         if (book_result == True):
-            if (book.book_remain == 1):
-                print(f"{book} is issued! {resulted_book_remain} copy is available of {resulted_book}.\n")
+            if (resulted_book_remain == 1):
+                print(f"{resulted_book} is issued! {resulted_book_remain} copy is available of {resulted_book}.\n")
             else:
-                print(f"{book} is issued! {resulted_book_remain} copies are available of {resulted_book}.\n")
+                print(f"{resulted_book} is issued! {resulted_book_remain} copies are available of {resulted_book}.\n")
         if (book_locate == False):
             book_result = False
             for book in self.issued_book:
@@ -103,10 +108,10 @@ class Library:
                 resulted_book = book
                 resulted_book_remain = book.book_remain
         if (book_result == True):
-            if (book.book_remain == 1):
-                print(f"{book} is Returned! {resulted_book_remain} copy is available of {resulted_book}.\n")
+            if (resulted_book_remain== 1):
+                print(f"{book} is Returned! Now {resulted_book_remain} copy is available of {resulted_book}.\n")
             else:
-                print(f"{book} is Returned! {resulted_book_remain} copies are available of {resulted_book}.\n")
+                print(f"{book} is Returned! Now {resulted_book_remain} copies are available of {resulted_book}.\n")
         if (book_locate == False):
             print(f"Book Not Found for Return! at id: {Id}\n")
     def showAllBook(self):
@@ -131,5 +136,10 @@ netLibrary = Library()
 # Add Books in Library
 netLibrary.addBook(book1)(book2)(book3)(book4)(book3)(book4)(book4)
 netLibrary.showAllBook()
-# netLibrary.findBook(103)
+netLibrary.findBook(101)
 # netLibrary.findBook(104)
+netLibrary.issueBook(104)
+# netLibrary.issueBook(101)
+netLibrary.showAllBook()
+netLibrary.returnBook(104)
+netLibrary.remove(104)
